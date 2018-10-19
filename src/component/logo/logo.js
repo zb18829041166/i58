@@ -1,5 +1,5 @@
 import React from 'react'
-import logoImg from './job.jpg'
+import logoImg from './job.png'
 import logoStyle from './logo.css'
 
 

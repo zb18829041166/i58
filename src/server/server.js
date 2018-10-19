@@ -1,7 +1,9 @@
 const express=require("express")
+const userRouter=require('./user')
+
 const mongoose=require("mongoose")
 //链接mongo
-const DB_URL='mongodb://127.0.0.1:27017'
+const DB_URL='mongodb://127.0.0.1:27017//i58'
 mongoose.connect(DB_URL)
 mongoose.connection.on('connected',()=>{
     console.log('success')
@@ -9,6 +11,9 @@ mongoose.connection.on('connected',()=>{
 
 
 const app=express()
+
+app.use('/user',userRouter)
+
 app.get('/',(req,res)=>{
     res.send("<h1>hello<h1>")
 })
