@@ -12,11 +12,15 @@ class Register extends React.Component{
             repeatpwd:"",
             type:"genius"
         }
+        this.handRegister=this.handRegister.bind(this)
     }
     handleChange(key,val){
         this.setState({
             [key]:val
         })
+    }
+    handRegister(){
+        console.log(this.state)
     }
     
     render(){
@@ -32,10 +36,12 @@ class Register extends React.Component{
                     >用户名</InputItem>
                     <WhiteSpace/>
                     <InputItem
+                        type="password"
                         onChange={v=>{this.handleChange('pwd',v)}}
                     >密码</InputItem> 
                     <WhiteSpace/>
                     <InputItem
+                        type="password"
                         onChange={v=>{this.handleChange('repeatpwd',v)}}
                     >确认密码</InputItem> 
                     <WhiteSpace/>
@@ -50,7 +56,7 @@ class Register extends React.Component{
                     >
                         Boss
                     </RadioItem>
-                    <Button type='primary'>注册</Button>
+                    <Button type='primary' onClick={this.handRegister}>注册</Button>
                 </List>
                 </WingBlank>
             </div>
