@@ -12,13 +12,10 @@ import reducers from './reducer'
 import './config'
 import Register from './container/register/register';
 
-//const store = createStore(reducers,compose(
-//    applyMiddleware(thunk),
-//    window.devToolsExtension?window.devToolsExtension:f=>f
-//))
-
-const store={}
-
+const store = createStore(reducers,compose(
+    applyMiddleware(thunk),
+    window.devToolsExtension?window.devToolsExtension:f=>f
+))
 
 ReactDOM.render((
     <Provider store={store}>
