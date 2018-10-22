@@ -4,6 +4,10 @@ const Router=express.Router()
 const model=require('./model')
 const User=model.getModel('user')
 
+const _filter={
+    "pwd":0,
+    "_v":0
+}
 
 
 
@@ -16,11 +20,11 @@ Router.get('/list',(req,res)=>{
 
 Router.post("/login",(req,res)=>{
     const {user,pwd}=req.body
-    User.findOne({user,pwd:md5Pwd(pwd)},{pwd:0},(err,doc)=>{
+    User.findOne({user,pwd:md5Pwd(pwd)},_filter,(err,doc)=>{
         if(!doc){
-            console.log('1111')
             return res.json({code:1,msg:"用户名或密码错误"})
         }else{
+            res.cookie('userid',doc._id)
             return res.json({code:0,data:doc})
         }
     })
@@ -38,11 +42,14 @@ Router.post("/register",(req,res)=>{
         if(doc){
             return res.json({code:1,msg:"用户名重复"})
         }
-        User.create({user,pwd:md5Pwd(pwd),type},(err,doc)=>{
+        const userModel=new User({user,type,pwd:md5Pwd(pwd)})
+        userModel.save((err,doc)=>{
             if(err){
                 return res.json({code:1,msg:"后端出错了"})
             }
-            return res.json({code:0})
+            const {user,type,_id}=doc
+            res.cookie("userid",_id)
+            return res.json({code:0,data:{user,type,_id}})
         })
     })
 })
@@ -50,7 +57,19 @@ Router.post("/register",(req,res)=>{
 
 
 Router.get('/info',(req,res)=>{
-    return res.json({code:1})
+    const {userid}=req.cookies
+    if(!userid){
+        return res.json({code:1})
+    }
+    User.findOne({_id:userid},_filter,(err,doc)=>{
+        if(err){
+            return res.json({code:1,msg:"后端出错"})
+        }
+        if(doc){
+            return res.json({code:0,data:doc})
+        }
+    })
+    
 })
 
 function md5Pwd(pwd){

@@ -1,17 +1,20 @@
 import axios from "../../node_modules/axios";
 import {Toast} from "antd-mobile"
 import {getRedirectPath} from '../utils'
+import { userInfo } from "os";
 
 const REGISTER_SUCCESS="REGISTER_SUCCESS"
 const ERROR_MSG="ERROR_MSG"
 const LOGIN_SUCCESS="LOGIN_SUCCESS"
+const LOAD_DATA="LOAD_DATA"
+
+
 
 const initState={
     redirectTo:"",
     isAuth:false,
     msg:"",
     user:"",
-    pwd:"",
     type:""
 }
 
@@ -25,6 +28,8 @@ export function user(state=initState,action){
             return {...state,isAuth:false,msg:action.msg}
         case LOGIN_SUCCESS:
             return {...state,msg:"",redirectTo:getRedirectPath(action.payload)}
+        case LOAD_DATA:
+            return {...state,...action.payload}
         default:
             return state
     }
@@ -57,6 +62,10 @@ export function login({user,pwd}){
         })
     }
 }   
+
+export function loadData(){
+    return {type:LOAD_DATA,payload:userInfo}
+}
 
 
 

@@ -3,14 +3,17 @@ import ReactDOM from 'react-dom';
 import {createStore,applyMiddleware,compose} from 'redux'
 import thunk from 'redux-thunk'
 import {Provider}from 'react-redux'
-import {BrowserRouter,Route,Redirect,Switch}  from 'react-router-dom'
+import {BrowserRouter,Route}  from 'react-router-dom'
 
 import Authroute from './component/authroute/authroute'
 import Login from "./container/login/login"
-import Logout from './container/logout/logout'
 import reducers from './reducer'
 import './config'
 import Register from './container/register/register';
+import axios from 'axios'
+
+axios.defaults.withCredentials = true;
+
 
 const store = createStore(reducers,compose(
     applyMiddleware(thunk),
