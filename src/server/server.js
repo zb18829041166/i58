@@ -4,9 +4,6 @@ const cookieParser=require("cookie-parser")
 
 const userRouter=require('./user')
 
-
-
-
 const app=express()
 
 

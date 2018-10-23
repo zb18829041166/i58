@@ -15,9 +15,10 @@ const _filter={
 
 
 Router.get('/list',(req,res)=>{
+    const {type}=req.query
     //User.remove({},(err,doc)=>{})
-    User.find({},(err,doc)=>{
-        return res.json(doc)
+    User.find({type},(err,doc)=>{
+        return res.json({code:0,data:doc})
     })
 })
 
