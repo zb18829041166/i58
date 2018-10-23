@@ -3,7 +3,7 @@ import Logo from '../../component/logo/logo'
 import {List,InputItem,WhiteSpace,Button,WingBlank,Radio} from 'antd-mobile'
 import {connect} from 'react-redux'
 import {register} from '../../redux/user.redux'
-import {Redirect}from 'react-router-dom'
+import {Redirect} from "react-router-dom"
 
 
 
@@ -13,6 +13,7 @@ import {Redirect}from 'react-router-dom'
 )
 
 class Register extends React.Component{
+
     constructor(props){
         super(props)
         this.state={
