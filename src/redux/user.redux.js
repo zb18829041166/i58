@@ -76,7 +76,7 @@ export function login({user,pwd}){
     }
 }   
 
-export function loadData(){
+export function loadData(userInfo){
     return {type:LOAD_DATA,payload:userInfo}
 }
 
