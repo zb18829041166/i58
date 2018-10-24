@@ -19,7 +19,7 @@ class Genius extends React.Component{
     render(){
         
         return (
-            <Usercard userlist={this.props.u}></Usercard>
+            <Usercard userlist={this.props.userlist}></Usercard>
         )
     }
 }

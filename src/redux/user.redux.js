@@ -5,7 +5,7 @@ import { userInfo } from "os";
 
 
 
-
+const LOGOUT_SUCCESS="LOGOUT_SUCCESS"
 const ERROR_MSG="ERROR_MSG"
 const AUTH_SUCCESS="AUTH_SUCCESS"
 const LOAD_DATA="LOAD_DATA"
@@ -29,6 +29,8 @@ export function user(state=initState,action){
             return {...state,isAuth:false,msg:action.msg}
         case LOAD_DATA:
             return {...state,...action.payload}
+        case LOGOUT_SUCCESS:
+            return {...initState,redirectTo:"/login"}
         default:
             return state
     }
@@ -43,7 +45,9 @@ function authSuccess(obj){
     return {type:AUTH_SUCCESS,payload:data}
 }
 
-
+export function logoutSubmit(){
+    return {type:LOGOUT_SUCCESS}
+}
 
 export function update(data){
     return dispatch=>{
