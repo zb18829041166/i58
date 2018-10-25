@@ -56,11 +56,13 @@ Router.post("/login",(req,res)=>{
 Router.get("/getmsglist",(req,res)=>{
     const user=req.cookies.user
     Chat.find(
-        {"$or":[{from:user,to:user}]},(err,doc)=>{
+        //{"$or":[{from:user,to:user}]},
+        {},(err,doc)=>{
             if(!err){
-                return
+                return res.json({code:0,msgs:doc})
             }
         })
+
 })
 
 
