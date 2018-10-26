@@ -4,7 +4,7 @@ import {createStore,applyMiddleware,compose} from 'redux'
 import thunk from 'redux-thunk'
 import {Provider}from 'react-redux'
 import {BrowserRouter,Route,Switch}  from 'react-router-dom'
-import "./index.css"
+
 
 import Authroute from './component/authroute/authroute'
 import Login from "./container/login/login"
@@ -18,6 +18,9 @@ import reducers from './reducer'
 import './config'
 import Register from './container/register/register';
 import axios from 'axios'
+
+import "./index.css"
+
 
 axios.defaults.withCredentials = true;
 

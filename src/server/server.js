@@ -18,7 +18,8 @@ io.on("connection",(socket)=>{
         const {from,to,msg}=data
         const chatid=[from,to].sort().join("_") //两个人之间的消息永远共一个id
         Chat.create({chatid,from,to,content:msg},(err,doc)=>{
-            io.emit("recvmsg",Object.assign({},doc))
+            //console.log(doc._doc)
+            io.emit("recvmsg",Object.assign({},doc._doc))  
         })
     })
 })

@@ -27,11 +27,6 @@ class Chat extends React.Component{
         
     }
     componentDidMount(){
-        //socket.on("recvmsg",(data)=>{
-         //   this.setState({
-        //        msg:[...this.state.msg,data.text]
-        //    })
-       // })
        this.props.getMegList()
        this.props.recvMsg()
     }
@@ -39,36 +34,45 @@ class Chat extends React.Component{
 
     handleSubmit(){
         //socket.emit("sendmsg",{text:this.state.text})
-        this.setState({text:""})
+        
         const from = this.props.user._id
         const to=this.props.match.params.user
         const msg=this.state.text
+        //console.log({from,to,msg})
+        //console.log("ffff")
         this.props.sendMsg({from,to,msg})
-        console.log(this.props)
+        this.setState({text:""})
     }
     render(){
         const user=this.props.match.params.user
+        //console.log("1"+user)
         const Item=List.Item
         return(
             <div id="chat-page">
-            <NavBar mode="dark">
+            <NavBar mode="dark"   className="fixed-header">
                 {user}
             </NavBar>
             {
                 this.props.chat.chatmsg.map(
                     v=>{
+                      
                         return v.from==user?(
-                        <List key={v._id}>
-                             <Item
-                             >{v.content}</Item>
-                        </List>
+                            <List key={v._id}>
+                            <Item>
+                              {v.content}
+                              {console.log("2"+v.from)}
+                            </Item>
+                            </List>
                         ):(
-                        <List key={v._id}>
-                            <Item
-                            extra={"avatar"}
-                            className="chat-me"
-                            >{v.content}</Item>
-                       </List>
+                            <List key={v._id}>
+                            <Item 
+                                className="chat-me"
+                                extra={"avatar"}
+                            >
+                              {console.log("3"+v.from)}
+                              {v.content}
+                            </Item>
+                            </List>
                         )
 
                     }

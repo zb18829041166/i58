@@ -1,7 +1,7 @@
 import axios from "axios"
 import io from "socket.io-client"
 import {Toast} from "antd-mobile"
-const socket=io("ws://localhost:9093")
+const socket=io("ws://localhost:9093") 
 
 const MSG_LIST="MSG_LIST"
 const MSG_RECV="MSG_RECV"
@@ -35,11 +35,12 @@ function msgList(data){
 }
 
 function msgRecv(data){
+    console.log(data)
     return {type:MSG_RECV,payload:data}
 }
 
 export function recvMsg(){
-    return dispatch=>{
+    return dispatch=>{ 
         socket.on("recvmsg",(data)=>{
             dispatch(msgRecv(data))
         })
@@ -48,7 +49,6 @@ export function recvMsg(){
 
 
 export function sendMsg({from,to,msg}){
-    console.log({from,to,msg})
     return dispatch=>{
         socket.emit("sendmsg",{from,to,msg})
     }
