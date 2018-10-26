@@ -6,7 +6,7 @@ import {Switch,Route} from "react-router-dom"
 import Boss from "../../component/boss/boss"
 import Genius from "../../component/genius/genius"
 import User from "../../component/user/user"
-
+import {getMegList,sendMsg,recvMsg} from "../../redux/chat.redux"
 
 
 function Msg(){
@@ -17,12 +17,21 @@ function Msg(){
 
 
 @connect(
-    state=>state,
+    state=>state,{
+        getMegList,
+        recvMsg,
+    }
+    
 )
 
 
 class Dashboard extends React.Component{
-
+    componentDidMount(){
+        if(!this.props.chat.chatmsg.length){
+            this.props.getMegList()
+            this.props.recvMsg()
+        }
+     }
     render(){
         const {pathname}=this.props.location
         const user=this.props.user

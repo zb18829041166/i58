@@ -1,13 +1,13 @@
 import React from "react"
-import {List,InputItem, NavBar} from "antd-mobile"
+import {List,InputItem, NavBar,Icon} from "antd-mobile"
 import {connect} from "react-redux"
 import {getMegList,sendMsg,recvMsg} from "../../redux/chat.redux"
-
+import {getChatId} from "../../utils"
 
 
 @connect(
-      state=>state,
-    {
+    state=>state,
+    { 
       getMegList,
       sendMsg,
       recvMsg
@@ -26,11 +26,13 @@ class Chat extends React.Component{
         this.handleSubmit=this.handleSubmit.bind(this)
         
     }
+    
     componentDidMount(){
-       this.props.getMegList()
-       this.props.recvMsg()
-    }
-
+        if(!this.props.chat.chatmsg.length){
+            this.props.getMegList()
+            this.props.recvMsg()
+        }
+     }
 
     handleSubmit(){
         //socket.emit("sendmsg",{text:this.state.text})
@@ -44,21 +46,36 @@ class Chat extends React.Component{
         this.setState({text:""})
     }
     render(){
-        const user=this.props.match.params.user
+        const userid=this.props.match.params.user
         //console.log("1"+user)
+        const users=this.props.chat.users
         const Item=List.Item
+        if(!users[userid]){
+            return null
+        }
+        const chatid=getChatId(this.props.user._id,this.props.match.params.user)
+        const chatmsgs=this.props.chat.chatmsg.filter(v=>v.chatid==chatid)
         return(
             <div id="chat-page">
-            <NavBar mode="dark"   className="fixed-header">
-                {user}
+            <NavBar 
+                mode="dark"   
+                className="fixed-header"
+                icon={<Icon type="left"/>}
+                onLeftClick={()=>{
+                    this.props.history.goBack()
+                }}
+            >
+             {users[userid].name}
             </NavBar>
             {
-                this.props.chat.chatmsg.map(
+                    chatmsgs.map(
                     v=>{
-                      
-                        return v.from==user?(
+                        const avatar=require(`../img/${users[v.from].avatar}.png`)
+                        return v.from==userid?(
                             <List key={v._id}>
-                            <Item>
+                            <Item
+                              thumb={avatar}
+                            >
                               {v.content}
                               {console.log("2"+v.from)}
                             </Item>
@@ -67,7 +84,7 @@ class Chat extends React.Component{
                             <List key={v._id}>
                             <Item 
                                 className="chat-me"
-                                extra={"avatar"}
+                                extra={<img src={avatar} alt=""/>}
                             >
                               {console.log("3"+v.from)}
                               {v.content}
