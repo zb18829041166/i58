@@ -7,13 +7,7 @@ import Boss from "../../component/boss/boss"
 import Genius from "../../component/genius/genius"
 import User from "../../component/user/user"
 import {getMegList,sendMsg,recvMsg} from "../../redux/chat.redux"
-
-
-function Msg(){
-    return <h2>消息列表页面</h2>
-}
-
-
+import Msg from "../msg/msg"
 
 
 @connect(

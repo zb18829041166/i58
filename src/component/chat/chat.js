@@ -1,8 +1,9 @@
 import React from "react"
-import {List,InputItem, NavBar,Icon} from "antd-mobile"
+import {List,InputItem, NavBar,Icon,Grid} from "antd-mobile"
 import {connect} from "react-redux"
 import {getMegList,sendMsg,recvMsg} from "../../redux/chat.redux"
 import {getChatId} from "../../utils"
+import { isNull } from "util";
 
 
 @connect(
@@ -21,7 +22,8 @@ class Chat extends React.Component{
         super(props)
         this.state={
             text:"",
-            msg:[]
+            msg:[],
+            showEmoji:false
         }
         this.handleSubmit=this.handleSubmit.bind(this)
         
@@ -32,6 +34,9 @@ class Chat extends React.Component{
             this.props.getMegList()
             this.props.recvMsg()
         }
+        setTimeout(()=>{
+           // window.dispatchEvent(new Event("resize"))
+        },0)
      }
 
     handleSubmit(){
@@ -46,6 +51,11 @@ class Chat extends React.Component{
         this.setState({text:""})
     }
     render(){
+        const emoji="😃 😂 😭 🐻 🍔" .split(" ").filter(v=>v).map(v=>(
+            {
+              text:v
+            }
+        ))
         const userid=this.props.match.params.user
         //console.log("1"+user)
         const users=this.props.chat.users
@@ -108,9 +118,37 @@ class Chat extends React.Component{
                                 this.setState({text:v})
                             }
                         }
-                        extra={<span onClick={this.handleSubmit}>发送</span>}
+                        extra={
+                            <div>
+                                 <span
+                                    onClick={()=>{
+                                        this.setState({
+                                            showEmoji:!this.state.showEmoji
+                                        })
+                                    }}
+                                    style={{marginRight:15}}
+                                 >😭</span>
+                                 <span onClick={this.handleSubmit}>发送</span>
+                            </div>
+                            }
                     />
                 </List>
+                {
+                   this.state.showEmoji?
+                     (<Grid
+                     data={emoji}
+                     columnNum={9}
+                     carouselMaxRow={4}
+                     isCarousel={true} 
+                     onClick={
+                         el=>{
+                             this.setState({
+                                text:this.state.text+el.text
+                             })
+                         }
+                     }
+                />):null
+                }
             </div>
             </div>
         )

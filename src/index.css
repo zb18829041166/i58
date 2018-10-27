@@ -34,6 +34,10 @@
 .page-content{
   padding: 45px 5px
 }
-.chat-me{
-  
+#chat-page .am-grid-icon{
+  display: none;
+}
+
+#chat-page .am-grid-text{
+  margin-top: 0;
 }
