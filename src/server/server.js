@@ -17,6 +17,7 @@ io.on("connection",(socket)=>{
         //io.emit("recvmsg",data)
         const {from,to,msg}=data
         const chatid=[from,to].sort().join("_") //两个人之间的消息永远共一个id
+        console.log(new Date().getTime())
         Chat.create({chatid,from,to,content:msg},(err,doc)=>{
             //console.log(doc._doc)
             io.emit("recvmsg",Object.assign({},doc._doc))  
