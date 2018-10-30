@@ -4,7 +4,7 @@ import {connect} from "react-redux"
 import {getMegList,sendMsg,recvMsg} from "../../redux/chat.redux"
 import {getChatId} from "../../utils"
 import { isNull } from "util";
-
+import QueueAnim from "rc-queue-anim"
 
 @connect(
     state=>state,
@@ -77,6 +77,7 @@ class Chat extends React.Component{
             >
              {users[userid].name}
             </NavBar>
+            <QueueAnim delay={100}>
             {
                     chatmsgs.map(
                     v=>{
@@ -105,7 +106,7 @@ class Chat extends React.Component{
                     }
                 )
             }
-
+            </QueueAnim>
 
 
             <div className="stick-footer">
