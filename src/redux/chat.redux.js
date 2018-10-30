@@ -1,6 +1,9 @@
 import axios from "axios"
 import io from "socket.io-client"
 import {Toast} from "antd-mobile"
+
+
+
 const socket=io("ws://localhost:9093") 
 
 const MSG_LIST="MSG_LIST"
@@ -47,8 +50,10 @@ export function recvMsg(){
             const userid=getState().user._id
             dispatch(msgRecv(data,userid))
         })
-    }
+     }
 }
+
+
 
 
 export function sendMsg({from,to,msg}){
@@ -58,7 +63,7 @@ export function sendMsg({from,to,msg}){
 }
 
 export function getMegList(){
-    return (dispatch,getState)=>{
+    /* return (dispatch,getState)=>{
         axios.get("/user/getmsglist")
         .then(res=>{
             if(res.status===200&&res.data.code===0){
@@ -67,6 +72,14 @@ export function getMegList(){
                 Toast.hide()
             }
         })
+    } */
+    return async (dispatch,getState)=>{
+        const res=await axios.get("/user/getmsglist")
+        if(res.status===200&&res.data.code===0){
+            const userid=getState().user._id
+            dispatch(msgList(res.data.msgs,res.data.users,userid))
+            Toast.hide()
+        }
     }
 }
 
