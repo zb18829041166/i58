@@ -1,7 +1,7 @@
 import React from "react"
 import {List,InputItem, NavBar,Icon,Grid} from "antd-mobile"
 import {connect} from "react-redux"
-import {getMegList,sendMsg,recvMsg} from "../../redux/chat.redux"
+import {getMegList,sendMsg,recvMsg,readMsg} from "../../redux/chat.redux"
 import {getChatId} from "../../utils"
 import { isNull } from "util";
 import QueueAnim from "rc-queue-anim"
@@ -11,7 +11,8 @@ import QueueAnim from "rc-queue-anim"
     { 
       getMegList,
       sendMsg,
-      recvMsg
+      recvMsg,
+      readMsg
     }
 )
 
@@ -34,6 +35,8 @@ class Chat extends React.Component{
             this.props.getMegList()
             this.props.recvMsg()
         }
+        const to=this.props.match.params.user
+        this.props.readMsg()   
         setTimeout(()=>{
            // window.dispatchEvent(new Event("resize"))
         },0)
