@@ -35,16 +35,19 @@ class Chat extends React.Component{
             this.props.getMegList()
             this.props.recvMsg()
         }
-        const to=this.props.match.params.user
-        this.props.readMsg()   
         setTimeout(()=>{
            // window.dispatchEvent(new Event("resize"))
         },0)
      }
 
+     componentWillMount(){
+        const to=this.props.match.params.user
+        this.props.readMsg(to)   
+     }
+
+
     handleSubmit(){
-        //socket.emit("sendmsg",{text:this.state.text})
-        
+        //socket.emit("sendmsg",{text:this.state.text})       
         const from = this.props.user._id
         const to=this.props.match.params.user
         const msg=this.state.text

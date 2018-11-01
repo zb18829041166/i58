@@ -8,7 +8,7 @@ const socket=io("ws://localhost:9093")
 
 const MSG_LIST="MSG_LIST"
 const MSG_RECV="MSG_RECV"
-//const MSG_READ="MSG_READ"
+const MSG_READ="MSG_READ"
 
 const initState={
     chatmsg:[],
@@ -30,8 +30,10 @@ export function chat(state=initState,action){
                     chatmsg:[...state.chatmsg,action.payload.data],
                     unread:state.unread+n
                    }
-       // case MSG_READ:
-        default:
+        case MSG_READ:
+            const {from,num}=action.pagload
+            return {...state,chatmsg:state.chatmsg.map(v=>({...v,read:v.from===from?true:false})),unread:state.unread-num}
+        default: 
             return state
     }
 }
@@ -53,13 +55,21 @@ export function recvMsg(){
      }
 }
 
+function msgRead({from,to,num}){
+    return {type:MSG_READ,pagload:{from,to,num}}
+}
 
-export function readMsg(){
+
+
+export function readMsg(from){
     return (dispatch,getState)=>{ 
-        socket.on("recvmsg",(data)=>{  
-            const userid=getState().user._id
-            dispatch(msgRecv(data,userid))
-        })
+       axios.post("/user/readmsg",{from})
+       .then(res=>{
+           const userid=getState.user._id
+           if(res.status==200&&res.data.code==0){
+               dispatch(msgRead({userid,from,num:res.data.num}))
+           }
+       }) 
      }
 }
 

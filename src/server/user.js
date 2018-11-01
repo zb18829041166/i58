@@ -39,6 +39,22 @@ Router.post("/update",(req,res)=>{
     })
 })
 
+Router.post("/readmsg",(req,res)=>{
+    const userid=req.cookies.userid
+    const {from}=req.body
+    Chat.update({from,to:userid},{read:true},
+      (err,doc)=>{
+          if(!err){
+            return res.json({code:0,num:doc.nModified})
+          }
+          return res.json({code:1,msg:"修改失败"})
+      }
+    )
+})
+
+
+
+
 
 Router.post("/login",(req,res)=>{
     const {user,pwd}=req.body
