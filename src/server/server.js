@@ -1,6 +1,8 @@
 const express=require("express")
 const bodyParser=require("body-parser")
 const cookieParser=require("cookie-parser")
+const path=require("path")
+
 
 const app=express()
 
@@ -32,10 +34,16 @@ const userRouter=require('./user')
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use('/user',userRouter)
-
-app.get('/',(req,res)=>{
-    res.send("<h1>hello<h1>")
+app.use(function(req,res,next){
+    if(req.url.startsWith("/user/")||req.url.startsWith("/static/")){
+        return next()
+    }
+    return res.sendFile(path.resolve("build/index.html"))
 })
+
+app.use("/",express.static(path.resolve("build")))
+
+
 server.listen(9093,()=>{
     console.log("监听成功") 
 })

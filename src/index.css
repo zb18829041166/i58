@@ -28,7 +28,7 @@
   z-index: 10;
   position:fixed;
   bottom: 0;
-  width: 100%
+  width: 100%;
 }
 
 .page-content{
@@ -36,8 +36,10 @@
 }
 #chat-page .am-grid-icon{
   display: none;
+  width: 100%;
 }
 
 #chat-page .am-grid-text{
   margin-top: 0;
 }
+
