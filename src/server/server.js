@@ -5,10 +5,8 @@ const path=require("path")
 
 
 const app=express()
-
 const model=require('./model')
 const Chat=model.getModel("chat")
-
 const server=require("http").Server(app)
 const io=require("socket.io")(server)
 
