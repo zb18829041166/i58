@@ -92,6 +92,7 @@ export function getMegList(){
             }
         })
     } */
+    //用async和await改写异步请求
     return async (dispatch,getState)=>{
         const res=await axios.get("/user/getmsglist")
         if(res.status===200&&res.data.code===0){
