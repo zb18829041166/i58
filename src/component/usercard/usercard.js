@@ -1,5 +1,5 @@
 import React from "react"
-import {Card,WhiteSpace,WingBlank,Toast} from "antd-mobile"
+import {Card,WhiteSpace,WingBlank} from "antd-mobile"
 import {withRouter} from "react-router-dom"
 
 @withRouter

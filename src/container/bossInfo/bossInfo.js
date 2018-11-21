@@ -14,7 +14,7 @@ class BossInfo extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            title:"" ,//职位
+            title:"" ,  //招聘职位名称
             company:"",
             money:"",
             desc:""
